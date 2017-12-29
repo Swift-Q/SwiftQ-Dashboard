@@ -1,4 +1,5 @@
 import Vapor
+import Leaf
 
 /// Called before your application initializes.
 ///
@@ -8,6 +9,7 @@ public func configure(
     _ env: inout Environment,
     _ services: inout Services
 ) throws {
-    // configure your application here
+    let provider = LeafProvider()
+    try services.provider(provider)
 
 }

@@ -1,5 +1,6 @@
 import Routing
 import Vapor
+import Leaf
 
 /// Register your application's routes here.
 ///
@@ -17,8 +18,9 @@ final class Routes: RouteCollection {
 
     /// See RouteCollection.boot
     func boot(router: Router) throws {
-        router.get("hello") { req in
-            return Future("Hello, world!")
+        router.get("/") { req -> Future<View> in
+            let leaf = try req.make(LeafRenderer.self)
+            return try leaf.make("login")
         }
     }
 }

@@ -1,0 +1,104 @@
+#extend("base")
+
+#export("head") {
+<link href="css/app.css" rel="stylesheet">
+}
+
+
+#export("body") {
+
+<body>
+
+    <!-- Side bar -->
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-sm-3 col-md-2 d-none d-sm-block sidebar">
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/overview">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/failed">Failed Logs</a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- Main content area -->
+            <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+                <h2>Overview</h2>
+                <br>
+                <section class="row text-center justify-content-center card-column">
+                    <div class="col-3 card-column">
+                        <div class="card">
+                          <div class="card-block">
+                            <br>
+                            <h4 class="card-title">Successful Tasks</h4>
+                            <br>
+                            <br>
+                            <h6 class="card-text mb-2 text-muted" > #(successful)</h6>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3 card-column">
+                    <div class="card">
+                      <div class="card-block">
+                        <br>
+                        <h4 class="card-title">Failed Tasks</h4>
+                        <br>
+                        <br>
+                        <h6 class="card-text mb-2 text-muted" > #(failed) </h6>
+                        <br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3 card-column">
+                <div class="card">
+                  <div class="card-block">
+                    <br>
+                    <h4 class="card-title">Queued</h4>
+                    <br>
+                    <br>
+                    <h6 class="card-text mb-2 text-muted" >#(queued)</h6>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <br>
+    <h2>Workers</h2>
+    <br>
+    <section class="row justify-content-center ">
+
+       <div class="col-9 table-responsive">
+           <table class="table">
+               <thead>
+                   <tr>
+                       <th>#</th>
+                       <th>Worker</th>
+                       <th>Successful</th>
+                       <th>Failed</th>
+                   </tr>
+               </thead>
+               <tbody>
+                   #loop(workers, "worker") {
+                   <tr>
+                       <th scope="row">#(offset)</th>
+                       <td>#(worker.name)</td>
+                       <td>#(worker.successful)</td>
+                       <td>#(worker.failed)</td>
+                   </tr>
+               }
+           </tbody>
+       </table>
+   </div>
+</section>
+</main>
+</div>
+
+
+</body>
+
+}

@@ -1,0 +1,58 @@
+body {
+
+	background-color: #F7F7F7;
+	padding-top: 3.5rem;
+}
+
+.navbar {
+	background: #FFFFFF;
+	border-bottom: 1px solid #eee;
+}
+
+.navbar .nav-link  {
+  position: absolute;
+  right: 15px;
+}
+
+/*@media (max-width: 767px) {
+  .navbar .login-btn {
+    right: 75px;
+  }
+}*/
+
+/* Sidebar */
+.sidebar {
+	position: fixed;
+	top: 51px;
+	bottom: 0;
+	left: 0;
+	z-index: 1000;
+	padding: 20px;
+	overflow-x: hidden;
+	overflow-y: auto; 
+	border-right: 1px solid #eee;
+	background: #FFFFFF;
+	text-align: center;
+}
+
+.card {
+	border: none;
+	box-shadow: 0 6px 12px rgba(0,0,0,.1);
+}
+
+.card:hover {
+	box-shadow: 0 6px 12px rgba(0,0,0,.2);
+}
+
+
+.nav-link {
+	color: #A5A5A5;
+}
+.nav-link:hover {
+	color: #FFD62F;
+}
+
+.table {
+    background: #FFFFFF;
+    box-shadow: 0 6px 12px rgba(0,0,0,.1);
+}
