@@ -9,6 +9,11 @@ final class Routes: RouteCollection {
     /// Use this to create any services you may
     /// need for your routes.
     let app: Application
+    
+    let controllers: [Routable.Type] = [
+        LoginController.self,
+        OverviewController.self
+    ]
 
     /// Create a new Routes collection with
     /// the supplied application.
@@ -18,9 +23,9 @@ final class Routes: RouteCollection {
 
     /// See RouteCollection.boot
     func boot(router: Router) throws {
-        router.get("/") { req -> Future<View> in
-            let leaf = try req.make(LeafRenderer.self)
-            return try leaf.make("login")
+        controllers.forEach { controller in
+            let map = controller.routeMap()
+            map.forEach { router.get($0.path, use: $0.handler) }
         }
     }
 }

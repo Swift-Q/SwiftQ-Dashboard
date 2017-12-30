@@ -9,6 +9,7 @@ import Foundation
 import Redis
 import Async
 
+// Make into container type
 final class RedisAdaptor {
     
     private let client: Future<RedisClient>
