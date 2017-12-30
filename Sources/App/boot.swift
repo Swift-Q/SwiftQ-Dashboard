@@ -10,5 +10,5 @@ public func boot(_ app: Application) throws {
     let routes = Routes(app: app)
     try router.register(collection: routes)
 
-    // your code here
+
 }

@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+struct Consumers {
+    
+    let names: [String]
+    
+    static func get() -> RedisResource<Consumers> {
+        let command = Command.smembers(key: "consumers")
+        return RedisResource<Consumers>(command: command) { names -> Consumers? in
+            return Consumers(names: names)
+        }
+    }
+    
+}

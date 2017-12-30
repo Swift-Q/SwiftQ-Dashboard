@@ -9,7 +9,10 @@ public func configure(
     _ env: inout Environment,
     _ services: inout Services
 ) throws {
-    let provider = LeafProvider()
-    try services.provider(provider)
+    let leaf = LeafProvider()
+    try services.provider(leaf)
+    
+    let redis = RedisProvider()
+    try services.provider(redis)
 
 }

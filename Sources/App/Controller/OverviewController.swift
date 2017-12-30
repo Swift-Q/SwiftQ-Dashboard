@@ -17,6 +17,14 @@ final class OverviewController: Routable {
         return try leaf.make("overview")
     }
     
+//    let redis = try req.make(RedisAdaptor.self)
+//
+//    redis.retrieve(Consumers.get()).do { data in
+//    print(data)
+//    }.catch { error in
+//    print(error)
+//    }
+    
     static func routeMap() -> [RouteResource] {
         let controller = self.init()
         return [
