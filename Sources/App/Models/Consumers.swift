@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Consumers {
+struct Consumers: RedisRetrievable {
     
     let names: [String]
     

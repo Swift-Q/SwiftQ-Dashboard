@@ -42,31 +42,29 @@ final class RedisAdaptor {
             }.catch(promise.fail)
         
         self.client = promise.future
-        
-        //        self.client = client.run(command: "AUTH", arguments: [RedisData(bulk: password)])
-        //            .flatMap(to: RedisClient.self) { data in
-        //                client.run(command: "SELECT", arguments: [RedisData(bulk: config.database.description)])
-        //                    .flatMap(to: RedisClient.self) { _ in
-        //                        promise.complete(client)
-        //                        return promise.future
-        //                }
-        //        }
-        
-        
     }
     
-    func retrieve<A>(_ resource: RedisResource<A>) -> Future<RedisData> {
+    func execute<A>(_ resource: RedisResource<A>) -> Future<RedisData> {
         return client.flatMap(to: RedisData.self) { client in
             return client.run(command: resource.command.rawValue, arguments: resource.command.args)
+        }
+    }
+    
+    func retrieve<A: RedisRetrievable>(_ model: A.Type) -> Future<A?> {
+        let resource = model.get()
+        let data = client.flatMap(to: RedisData.self) { client in
+            return client.run(command: resource.command.rawValue, arguments: resource.command.args)
+        }
+        return data.map(to: A?.self) { data in
+            return resource.transform(data)
         }
     }
     
 }
 
 
-
 protocol RedisRetrievable {
     
-    func get() -> RedisResource<Self>
+    static func get() -> RedisResource<Self>
     
 }

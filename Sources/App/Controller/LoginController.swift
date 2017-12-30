@@ -14,6 +14,11 @@ final class LoginController: Routable {
     
     func login(_ req: Request) throws -> Future<View> {
         let leaf = try req.make(LeafRenderer.self)
+        
+        let _ = try req.make(RedisAdaptor.self).retrieve(Consumers.self).do { (data) in
+            print(data ?? "nothing!!!")
+        }
+        
         return try leaf.make("login")
     }
     
