@@ -9,7 +9,7 @@ import Foundation
 
 struct Analytics {
     
-    let Consumers: [Consumer]
+    let consumers: [Consumer]
     
     private let formatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
@@ -18,19 +18,19 @@ struct Analytics {
     }()
     
     var successful: Int {
-        return Consumers
+        return consumers
             .map { $0.successful }
             .reduce(0,+)
     }
     
     var failed: Int {
-        return Consumers
+        return consumers
             .map { $0.failed }
             .reduce(0,+)
     }
     
     var queued: Int {
-        return Consumers
+        return consumers
             .map { $0.queued }
             .reduce(0, +)
     }
@@ -41,6 +41,22 @@ struct Analytics {
     
     var formattedFailed: String {
         return formatter.string(from: NSNumber(integerLiteral: failed)) ?? ""
+    }
+    
+}
+
+struct AnalyticsView: Codable {
+    
+    let successful: String
+    let failed: String
+    let queued: String
+    let workers: [String]
+    
+    init(_ analytics: Analytics) {
+        self.successful = analytics.formattedSuccessful
+        self.failed = analytics.formattedFailed
+        self.queued = analytics.queued.description
+        self.workers = analytics.consumers.map { $0.name }
     }
     
 }

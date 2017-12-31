@@ -11,19 +11,28 @@ import Leaf
 
 final class OverviewController: Routable {
     
-   
+    // TODO: Figure out a way to simplify this.
     func overview(_ req: Request) throws -> Future<View> {
-        let leaf = try req.make(LeafRenderer.self)
-        return try leaf.make("overview")
+        let client = try req.make(RedisAdaptor.self)
+        
+        return client
+            .retrieve(Consumers.self)
+            .flatMap(to: View.self) { consumers in
+                return consumers!
+                    .names
+                    .flatMap { name -> Future<Consumer?> in
+                        return client.retrieve(Consumer.get(with: name))
+                    }
+                    .flatten()
+                    .map(to: Analytics.self) { consumers in
+                        return Analytics(consumers: consumers.flatMap { $0 })
+                    }.flatMap(to: View.self) { analytics in
+                        try req.make(LeafRenderer.self).make("overview", AnalyticsView(analytics))
+                }
+        }
     }
     
-//    let redis = try req.make(RedisAdaptor.self)
-//
-//    redis.retrieve(Consumers.get()).do { data in
-//    print(data)
-//    }.catch { error in
-//    print(error)
-//    }
+    
     
     static func routeMap() -> [RouteResource] {
         let controller = self.init()

@@ -30,5 +30,15 @@ extension RedisResource {
         }
     }
     
+    init(command: Command, transformOptionalStrings: @escaping ([String?]) -> A?) {
+        self.command = command
+        self.transform = { data in
+            let optionalStrings = data.array?.map { data in
+                return data.string
+            }
+            return optionalStrings.flatMap(transformOptionalStrings)
+        }
+    }
+    
     
 }

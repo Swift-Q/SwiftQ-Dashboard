@@ -15,7 +15,7 @@
 	<script src="/js/popper.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 
-	<!-- #import("head") -->
+	#import("head")
 	<link href="css/app.css" rel="stylesheet">
 </head>
 

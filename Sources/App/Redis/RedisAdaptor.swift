@@ -60,6 +60,16 @@ final class RedisAdaptor {
         }
     }
     
+    func retrieve<A>(_ resource: RedisResource<A>) -> Future<A?> {
+        let data = client.flatMap(to: RedisData.self) { client in
+            return client.run(command: resource.command.rawValue, arguments: resource.command.args)
+        }
+        return data.map(to: A?.self) { data in
+            return resource.transform(data)
+        }
+    }
+    
+    
 }
 
 
@@ -68,3 +78,6 @@ protocol RedisRetrievable {
     static func get() -> RedisResource<Self>
     
 }
+
+
+
