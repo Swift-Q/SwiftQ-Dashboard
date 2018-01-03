@@ -1,11 +1,5 @@
-#extend("base")
-
-#export("head") {
-<link href="css/app.css" rel="stylesheet">
-}
-
-
-#export("body") {
+#extend("base") #export("head") {
+<link href="css/app.css" rel="stylesheet"> } #export("body") {
 
 <body>
 
@@ -28,37 +22,37 @@
                 <br>
                 <section class="row justify-content-center">
 
-                 <div class="col-11 table-responsive">
-                     <table class="table">
-                         <thead>
-                             <tr>
-                                 <th>#</th>
-                                 <th>Task Name</th>
-                                 <th>Worker</th>
-                                 <th>Created at</th>
-                                 <th>Error Date</th>
-                                 <th>Error</th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             #loop(tasks, "task") {
-                             <tr>
-                                 <th scope="row">#(offset)</th>
-                                 <td>#(task.taskName)</td>
-                                 <td>#(task.worker)</td>
-                                 <td>#(task.createdAt)</td>
-                                 <td>#(task.errorAt)</td>
-                                 <td>#(task.error)</td>
-                             </tr>
-                         }
-                     </tbody>
-                 </table>
-             </div>
+                    <div class="col-11 table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Task Name</th>
+                                    <th>Worker</th>
+                                    <th>Created at</th>
+                                    <th>Error Date</th>
+                                    <th>Error</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                #loop(tasks, "task") {
+                                <tr>
+                                    <th scope="row">#(offset)</th>
+                                    <td>#(task.taskName)</td>
+                                    <td>#(task.worker)</td>
+                                    <td>#(task.createdAt)</td>
+                                    <td>#(task.errorAt)</td>
+                                    <td>#(task.error)</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
 
 
-         </section>
-     </main>
- </div>
+                </section>
+            </main>
+        </div>
 
 
 </body>
