@@ -1,15 +1,17 @@
-#extend("base") #export("head") {
-<link href="css/app.css" rel="stylesheet"> } #export("body") {
+
+#set("body") {
 
 <body>
 
     <!-- Side bar -->
     <div class="container-fluid">
         <div class="row">
-            <nav class="col-sm-3 col-md-2 d-none d-sm-block sidebar">
+            <nav class="col-sm-3 col-md-1 d-none d-sm-block sidebar">
                 <ul class="nav nav-pills flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="/overview">Overview</a>
+                        	<a class="nav-link" href="/overview">
+								<img src="/stats.png" width="25" height="25" alt="">
+							</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/failed">Failed Logs</a>
@@ -17,7 +19,7 @@
                 </ul>
             </nav>
             <!-- Main content area -->
-            <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+            <main class="col-sm-9 ml-sm-auto col-md-11 pt-3" role="main">
                 <h2>Failed Tasks</h2>
                 <br>
                 <section class="row justify-content-center">
@@ -58,3 +60,5 @@
 </body>
 
 }
+
+#embed("base") 

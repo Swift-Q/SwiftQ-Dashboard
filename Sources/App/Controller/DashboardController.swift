@@ -36,6 +36,10 @@ final class DashboardController {
     private func logout(_ req: Request) throws -> Response {
         return req.redirect(to: "/")
     }
+    
+    private func failed(_ req: Request) throws -> Future<View> {
+        return try req.make(LeafRenderer.self).make("failed")
+    }
 
     
 }
@@ -45,6 +49,7 @@ extension DashboardController: Controllable {
     func register(with router: Router) {
         router.get("/overview", use: overview)
         router.get("/logout", use: logout)
+        router.get("/failed", use: failed)
     }
     
 }
