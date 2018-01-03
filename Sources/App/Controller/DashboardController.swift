@@ -9,16 +9,16 @@ import Foundation
 import Vapor
 import Leaf
 
-final class OverviewController: Routable {
+final class DashboardController {
     
     // TODO: Figure out a way to simplify this.
-    func overview(_ req: Request) throws -> Future<View> {
+    private func overview(_ req: Request) throws -> Future<View> {
         let client = try req.make(RedisAdaptor.self)
         
         return client
             .retrieve(Consumers.self)
             .flatMap(to: View.self) { consumers in
-                return consumers!
+                return consumers!  // Throw in retrive function so this is not an optional.
                     .names
                     .flatMap { name -> Future<Consumer?> in
                         return client.retrieve(Consumer.get(with: name))
@@ -32,13 +32,19 @@ final class OverviewController: Routable {
         }
     }
     
+    // TODO: Remove session
+    private func logout(_ req: Request) throws -> Response {
+        return req.redirect(to: "/")
+    }
+
     
+}
+
+extension DashboardController: Controllable {
     
-    static func routeMap() -> [RouteResource] {
-        let controller = self.init()
-        return [
-            RouteResource(path: "/overview", handler: controller.overview)
-        ]
+    func register(with router: Router) {
+        router.get("/overview", use: overview)
+        router.get("/logout", use: logout)
     }
     
 }

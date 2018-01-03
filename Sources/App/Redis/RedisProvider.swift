@@ -14,7 +14,7 @@ final class RedisProvider: Provider {
     
     func boot(_ worker: Container) throws { }
     
-    /// See Service.Provider.Register
+
     public func register(_ services: inout Services) throws {
         services.register(RedisAdaptor.self) { container -> RedisAdaptor in
             let config = try container.make(RedisConfig.self, for: RedisAdaptor.self)

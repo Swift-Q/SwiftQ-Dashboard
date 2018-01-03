@@ -9,32 +9,26 @@ import Foundation
 import Vapor
 import Leaf
 
-final class LoginController: Routable {
+final class LoginController {
     
     
-    func login(_ req: Request) throws -> Future<View> {
+    private func login(_ req: Request) throws -> Future<View> {
         let leaf = try req.make(LeafRenderer.self)
         return try leaf.make("login")
     }
+
+}
+
+extension LoginController: Controllable {
     
-    
-    static func routeMap() -> [RouteResource] {
-        let controller = self.init()
-        return [
-            RouteResource(path: "/", handler: controller.login)
-        ]
+    func register(with router: Router) {
+        router.get("/", use: login)
     }
     
 }
 
-// Does not work when handler returns ResponseEncodable for some resonse.
-struct RouteResource {
-    let path: PathComponent
-    let handler: (Request) throws -> Future<View>
-}
-
-protocol Routable: EmptyInitializable {
-    static func routeMap() -> [RouteResource]
+protocol Controllable: EmptyInitializable {
+    func register(with router: Router)
 }
 
 

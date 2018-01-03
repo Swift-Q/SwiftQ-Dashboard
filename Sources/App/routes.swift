@@ -10,9 +10,9 @@ final class Routes: RouteCollection {
     /// need for your routes.
     let app: Application
     
-    let controllers: [Routable.Type] = [
+    let controllers: [Controllable.Type] = [
         LoginController.self,
-        OverviewController.self
+        DashboardController.self
     ]
 
     /// Create a new Routes collection with
@@ -23,9 +23,6 @@ final class Routes: RouteCollection {
 
     /// See RouteCollection.boot
     func boot(router: Router) throws {
-        controllers.forEach { controller in
-            let map = controller.routeMap()
-            map.forEach { router.get($0.path, use: $0.handler) }
-        }
+        controllers.forEach { $0.init().register(with: router) }
     }
 }
