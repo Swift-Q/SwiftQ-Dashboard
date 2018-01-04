@@ -41,6 +41,12 @@ final class DashboardController {
         let client = try req.make(RedisAdaptor.self)
         let tasks = client.retrieve(FailedTask.get(0...10)) ?? []
         
+        tasks.always {
+            let stats = client.retrieve(RedisStats.get()).do { stats in
+                print(stats!)
+            }
+        }
+        
         return tasks
             .map(to: [FailedTaskView].self) { tasks in
                 return tasks.map { $0.viewResource }

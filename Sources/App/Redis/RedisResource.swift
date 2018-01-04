@@ -49,5 +49,11 @@ extension RedisResource {
         }
     }
     
+    init(command: Command, transformString: @escaping (String) -> A?) {
+        self.command = command
+        self.transform = { data in
+            return data.string.flatMap(transformString)
+        }
+    }
     
 }
