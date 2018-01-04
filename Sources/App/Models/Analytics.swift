@@ -56,7 +56,7 @@ struct AnalyticsView: Codable {
         self.successful = analytics.formattedSuccessful
         self.failed = analytics.formattedFailed
         self.queued = analytics.queued.description
-        self.workers = analytics.consumers.map { $0.resource }
+        self.workers = analytics.consumers.map { $0.viewResource }
     }
     
 }

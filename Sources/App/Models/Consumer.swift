@@ -39,18 +39,15 @@ struct Consumer {
     
     static func get(with name: String) -> RedisResource<Consumer> {
         let command = Command.mget(keys: [(name + ":s"), (name + ":f")])
-        //        let listCommand = Command.llen(key: name + ":pq")
+        //  let listCommand = Command.llen(key: name + ":pq")
         
         return RedisResource<Consumer>(command: command) { results -> Consumer in
             return Consumer(name: name, results: results)
         }
     }
     
-    var resource: ConsumerView {
-        return ConsumerView(name: self.name,
-                            successful: self.formattedSuccessful,
-                            failed: self.formattedFailed
-        )
+    var viewResource: ConsumerView {
+        return ConsumerView(self)
     }
     
 }
@@ -59,6 +56,12 @@ struct ConsumerView: ViewResource {
     let name: String
     let successful: String
     let failed: String
+    
+    init(_ consumer: Consumer) {
+        self.name = consumer.name
+        self.successful = consumer.formattedSuccessful
+        self.failed = consumer.formattedFailed
+    }
 }
 
 protocol ViewRepresentable {

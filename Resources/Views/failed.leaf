@@ -38,9 +38,9 @@
                                 #loop(tasks, "task") {
                                 <tr>
                                     <th scope="row">#(offset)</th>
-                                    <td>#(task.taskName)</td>
-                                    <td>#(task.worker)</td>
-                                    <td>#(task.createdAt)</td>
+                                    <td>#(task.name)</td>
+                                    <td>#(task.consumer)</td>
+                                    <td>#(task.enqueued)</td>
                                     <td>#(task.errorAt)</td>
                                     <td>#(task.error)</td>
                                 </tr>

@@ -39,18 +39,16 @@ final class DashboardController {
     
     private func failed(_ req: Request) throws -> Future<View> {
         let client = try req.make(RedisAdaptor.self)
+        let tasks = client.retrieve(FailedTask.get(0...10)) ?? []
         
-        let tasks = client.retrieve(FailedTask.get(1...10))
-        
-        tasks.do { data in
-            print(data ?? "Nothing here")
-        }.catch { error in
-            print(error)
+        return tasks
+            .map(to: [FailedTaskView].self) { tasks in
+                return tasks.map { $0.viewResource }
+            }.flatMap(to: View.self) { views in
+                return try req.make(LeafRenderer.self).make("failed", ["tasks": views])
         }
-        
-        return try req.make(LeafRenderer.self).make("failed")
     }
-
+    
     
 }
 
