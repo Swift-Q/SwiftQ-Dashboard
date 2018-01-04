@@ -42,7 +42,7 @@ final class DashboardController {
         let tasks = client.retrieve(FailedTask.get(0...10)) ?? []
         
         tasks.always {
-            let stats = client.retrieve(RedisStats.get()).do { stats in
+            _ = client.retrieve(RedisStats.get()).do { stats in
                 print(stats!)
             }
         }

@@ -64,6 +64,53 @@
 				</section>
 				<br>
 				<br>
+				
+				<h2>Redis</h2>
+				<br>
+				<section class="row text-center justify-content-center card-column">
+					<div class="col-3 card-column">
+						<div class="card">
+							<div class="card-block">
+								<br>
+								<h4 class="card-title">Connected Clients</h4>
+								<br>
+								<br>
+								<h6 class="card-text mb-2 text-muted"> #(successful)</h6>
+								<br>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-3 card-column">
+						<div class="card">
+							<div class="card-block">
+								<br>
+								<h4 class="card-title">Blocked Clients</h4>
+								<br>
+								<br>
+								<h6 class="card-text mb-2 text-muted"> #(failed) </h6>
+								<br>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-3 card-column">
+						<div class="card">
+							<div class="card-block">
+								<br>
+								<h4 class="card-title">Usage</h4>
+								<br>
+								<br>
+								<h6 class="card-text mb-2 text-muted">#(queued)</h6>
+								<br>
+							</div>
+						</div>
+					</div>
+				</section>
+				<br>
+				<br>
+
+
 				<h2>Workers</h2>
 				<br>
 				<section class="row justify-content-center ">
