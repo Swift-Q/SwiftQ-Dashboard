@@ -39,21 +39,30 @@ struct Consumer {
     
     static func get(with name: String) -> RedisResource<Consumer> {
         let command = Command.mget(keys: [(name + ":s"), (name + ":f")])
-//        let listCommand = Command.llen(key: name + ":pq")
-
+        //        let listCommand = Command.llen(key: name + ":pq")
+        
         return RedisResource<Consumer>(command: command) { results -> Consumer in
             return Consumer(name: name, results: results)
         }
     }
     
-    
-}
-
-extension Array {
-    
-    subscript (safe index: Int) -> Element? {
-        return index < count ? self[index] : nil
+    var resource: ConsumerView {
+        return ConsumerView(name: self.name,
+                            successful: self.formattedSuccessful,
+                            failed: self.formattedFailed
+        )
     }
     
 }
 
+struct ConsumerView: ViewResource {
+    let name: String
+    let successful: String
+    let failed: String
+}
+
+protocol ViewRepresentable {
+    var resource: ViewResource { get }
+}
+
+protocol ViewResource: Codable { }

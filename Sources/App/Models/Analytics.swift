@@ -50,13 +50,13 @@ struct AnalyticsView: Codable {
     let successful: String
     let failed: String
     let queued: String
-    let workers: [String]
+    let workers: [ConsumerView]
     
     init(_ analytics: Analytics) {
         self.successful = analytics.formattedSuccessful
         self.failed = analytics.formattedFailed
         self.queued = analytics.queued.description
-        self.workers = analytics.consumers.map { $0.name }
+        self.workers = analytics.consumers.map { $0.resource }
     }
     
 }

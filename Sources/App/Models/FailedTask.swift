@@ -16,5 +16,13 @@ struct FailedTask: Decodable {
     private let error: String
     
     
+    static func get(_ range: CountableClosedRange<Int>) -> RedisResource<[FailedTask]> {
+        let command = Command.lrange(key: "logs", range: range)
+        return RedisResource<[FailedTask]>(command: command, transformData: { datas -> [FailedTask] in
+            return datas.flatMap { data in
+                try? JSONDecoder().decode(FailedTask.self, from: data)
+            }
+        })
+    }
     
 }
