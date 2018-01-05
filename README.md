@@ -38,3 +38,9 @@ SwiftQ-Dashboard is a standalone Vapor app for monitoring Tasks from SwiftQ.  Th
     <br>
     <br>
 </p>
+
+### Node Monitoring
+
+### Authorization
+
+### Security

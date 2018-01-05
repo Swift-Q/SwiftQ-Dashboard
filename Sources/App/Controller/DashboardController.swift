@@ -15,6 +15,16 @@ final class DashboardController {
     private func overview(_ req: Request) throws -> Future<View> {
         let client = try req.make(RedisAdaptor.self)
         
+//        let view = client.retrieve(RedisStats.get()).map(to: RedisStatsView?.self) { stats in
+//            return stats?.viewResource
+//        }
+//
+//
+////
+//        return view.flatMap(to: View.self) { stats in
+//           try req.make(LeafRenderer.self).make("overview", stats)
+//        }
+        
         return client
             .retrieve(Consumers.self)
             .flatMap(to: View.self) { consumers in
