@@ -13,6 +13,19 @@ body {
 	right: 15px;
 }
 
+.progress-bar {
+	background-color: #FFD62F;
+}
+
+#h5Left {
+	padding-left: 16px;
+}
+
+.card-header {
+	padding: 0.2rem 0.5rem;
+	background-color: white;
+}
+
 
 /*@media (max-width: 767px) {
   .navbar .login-btn {
@@ -39,8 +52,16 @@ body {
 	/* padding-left: 0px; */
 }
 
+#nested {
+	box-shadow: none;
+}
+
+#nested: hover {
+	box-shadow: none;
+}
+
 .card {
-	border: none;
+	/* border: none; */
 	box-shadow: 0 6px 12px rgba(0, 0, 0, .1);
 }
 

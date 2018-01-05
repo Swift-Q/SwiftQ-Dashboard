@@ -11,14 +11,18 @@ struct RedisStats {
     
     let connectedClients: Int
     let blockedClients: Int
-    let usedMemory: String
+    let usedMemoryHuman: String
     let uptime: Int // Seconds
+    let usedMemory: Int
+    let totalMemory: Int
     
     init(_ stats: [String : String]) {
         self.connectedClients = Int(stats["connected_clients"]?.digits ?? "") ?? 0
         self.blockedClients =  Int(stats["blocked_clients"]?.digits ?? "") ?? 0
-        self.usedMemory = stats["used_memory_human"] ?? ""
+        self.usedMemoryHuman = stats["used_memory_human"] ?? ""
         self.uptime = Int(stats["uptime_in_seconds"]?.digits ?? "") ?? 0
+        self.usedMemory = Int(stats["used_memory"]?.digits ?? "") ?? 0
+        self.totalMemory = Int(stats["total_system_memory"]?.digits ?? "") ?? 0
     }
     
     static func get() -> RedisResource<RedisStats> {

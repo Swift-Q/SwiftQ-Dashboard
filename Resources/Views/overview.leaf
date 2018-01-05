@@ -64,48 +64,80 @@
 				</section>
 				<br>
 				<br>
-				
+
 				<h2>Redis</h2>
 				<br>
-				<section class="row text-center justify-content-center card-column">
-					<div class="col-3 card-column">
+				<section class="row text-left justify-content-center card-column">
+					<div class="col-9 card-column ">
 						<div class="card">
 							<div class="card-block">
 								<br>
-								<h4 class="card-title">Connected Clients</h4>
+								<h5 class="card-title" id="h5Left">Usage</h5>
+								<br>
+								<div class="w-75 mx-auto progress">
+									<div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">70%</div>
+								</div>
 								<br>
 								<br>
-								<h6 class="card-text mb-2 text-muted"> #(successful)</h6>
 								<br>
-							</div>
-						</div>
-					</div>
 
-					<div class="col-3 card-column">
-						<div class="card">
-							<div class="card-block">
-								<br>
-								<h4 class="card-title">Blocked Clients</h4>
-								<br>
-								<br>
-								<h6 class="card-text mb-2 text-muted"> #(failed) </h6>
-								<br>
-							</div>
-						</div>
-					</div>
+								<div class="row text-center justify-content-center card-column" id="nestedRow">
+									<div class="col-md-2 ">
 
-					<div class="col-3 card-column">
-						<div class="card">
-							<div class="card-block">
+										<div class="h-100 card" id="nested">
+											<!-- <h6 class="card-title" id="h6Title" >Used Memory</h6> -->
+											<div class="card-header">
+												<!-- Used Memory -->
+												<h7 class="card-title" id="h6Title">Used Memory</h7>
+											</div>
+											<br>
+											<br>
+											<h7 class="card-text mb-2 text-muted"> #(successful)</h7>
+										</div>
+									</div>
+
+									<div class="col-md-2 ">
+										<div class="h-100 card" id="nested">
+											<div class="card-header">
+												<h7 class="card-title" id="h6Title">Connected Clients</h7>
+											</div>
+											<br>
+											<h7 class="card-text mb-2 text-muted"> #(successful)</h7>
+										</div>
+									</div>
+
+									<div class="col-md-2">
+										<div class="h-100 card" id="nested">
+											<div class="card-header">
+												<h7 class="card-title" id="h6Title">Blocked Clients</h7>
+
+											</div>
+											<br>
+											<h7 class="card-text mb-2 text-muted"> #(successful)</h7>
+										</div>
+									</div>
+
+									<div class=" col-md-2">
+										<div class="h-100 card" id="nested">
+											<div class="card-header">
+												<h7 class="card-title" id="h6Title">Uptime</h7>
+											</div>
+
+											<br>
+											<br>
+											<h7 class="card-text mb-2 text-muted"> #(successful)</h7>
+
+
+										</div>
+									</div>
+								</div>
+
 								<br>
-								<h4 class="card-title">Usage</h4>
-								<br>
-								<br>
-								<h6 class="card-text mb-2 text-muted">#(queued)</h6>
 								<br>
 							</div>
+
 						</div>
-					</div>
+
 				</section>
 				<br>
 				<br>
@@ -139,9 +171,7 @@
 					</div>
 				</section>
 			</main>
-		</div>
+			</div>
 </body>
 </body>
-} 
-
-#embed("base")
+} #embed("base")
