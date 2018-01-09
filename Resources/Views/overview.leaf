@@ -30,7 +30,7 @@
 								<h4 class="card-title">Successful Tasks</h4>
 								<br>
 								<br>
-								<h6 class="card-text mb-2 text-muted"> #(successful)</h6>
+								<h6 class="card-text mb-2 text-muted"> #(analytics.successful)</h6>
 								<br>
 							</div>
 						</div>
@@ -43,7 +43,7 @@
 								<h4 class="card-title">Failed Tasks</h4>
 								<br>
 								<br>
-								<h6 class="card-text mb-2 text-muted"> #(failed) </h6>
+								<h6 class="card-text mb-2 text-muted"> #(analytics.failed) </h6>
 								<br>
 							</div>
 						</div>
@@ -56,7 +56,7 @@
 								<h4 class="card-title">Queued</h4>
 								<br>
 								<br>
-								<h6 class="card-text mb-2 text-muted">#(queued)</h6>
+								<h6 class="card-text mb-2 text-muted">#(analytics.queued)</h6>
 								<br>
 							</div>
 						</div>
@@ -92,7 +92,7 @@
 											</div>
 											<br>
 											<br>
-											<h7 class="card-text mb-2 text-muted"> #(memory)</h7>
+											<h7 class="card-text mb-2 text-muted"> #(redisStats.memory)</h7>
 										</div>
 									</div>
 
@@ -102,7 +102,7 @@
 												<h7 class="card-title" id="h6Title">Connected Clients</h7>
 											</div>
 											<br>
-											<h7 class="card-text mb-2 text-muted"> #(connectedClients)</h7>
+											<h7 class="card-text mb-2 text-muted"> #(redisStats.connectedClients)</h7>
 										</div>
 									</div>
 
@@ -113,7 +113,7 @@
 
 											</div>
 											<br>
-											<h7 class="card-text mb-2 text-muted"> #(blockedClients)</h7>
+											<h7 class="card-text mb-2 text-muted"> #(redisStats.blockedClients)</h7>
 										</div>
 									</div>
 
@@ -125,7 +125,7 @@
 
 											<br>
 											<br>
-											<h7 class="card-text mb-2 text-muted"> #(uptime)</h7>
+											<h7 class="card-text mb-2 text-muted"> #(redisStats.uptime)</h7>
 
 										</div>
 									</div>
@@ -157,7 +157,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								#loop(workers, "worker") {
+								#loop(analytics.workers, "worker") {
 								<tr>
 									<th scope="row">#(offset)</th>
 									<td>#(worker.name)</td>

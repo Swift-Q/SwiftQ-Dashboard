@@ -15,16 +15,6 @@ final class DashboardController {
     private func overview(_ req: Request) throws -> Future<View> {
         let client = try req.make(RedisAdaptor.self)
         
-//        let view = client.retrieve(RedisStats.get()).map(to: RedisStatsView?.self) { stats in
-//            return stats?.viewResource
-//        }
-//
-//
-////
-//        return view.flatMap(to: View.self) { stats in
-//           try req.make(LeafRenderer.self).make("overview", stats)
-//        }
-        
         return client
             .retrieve(Consumers.self)
             .flatMap(to: View.self) { consumers in
@@ -37,7 +27,13 @@ final class DashboardController {
                     .map(to: Analytics.self) { consumers in
                         return Analytics(consumers: consumers.flatMap { $0 })
                     }.flatMap(to: View.self) { analytics in
-                        try req.make(LeafRenderer.self).make("overview", AnalyticsView(analytics))
+                        return client.retrieve(RedisStats.get())
+                            .map(to: RedisStatsView?.self) { stats in
+                                return stats?.viewResource
+                            }.flatMap(to: View.self) { stats in
+                                let overview = Overview(analytics:  AnalyticsView(analytics), redisStats: stats)
+                                return try req.make(LeafRenderer.self).make("overview", overview)
+                        }
                 }
         }
     }
@@ -50,12 +46,6 @@ final class DashboardController {
     private func failed(_ req: Request) throws -> Future<View> {
         let client = try req.make(RedisAdaptor.self)
         let tasks = client.retrieve(FailedTask.get(0...10)) ?? []
-        
-        tasks.always {
-            _ = client.retrieve(RedisStats.get()).do { stats in
-                print(stats!)
-            }
-        }
         
         return tasks
             .map(to: [FailedTaskView].self) { tasks in
