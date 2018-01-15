@@ -31,6 +31,17 @@ struct AnalyticsView: Codable {
     
 }
 
+struct ConsumerView: ViewResource {
+    let name: String
+    let successful: String
+    let failed: String
+    
+    init(_ consumer: Consumer) {
+        self.name = consumer.name
+        self.successful = consumer.formattedSuccessful
+        self.failed = consumer.formattedFailed
+    }
+}
 
 struct RedisStatsView: Codable {
     let connectedClients: String

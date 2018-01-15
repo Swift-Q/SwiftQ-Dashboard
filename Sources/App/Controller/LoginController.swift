@@ -14,8 +14,10 @@ final class LoginController {
     
     private func login(_ req: Request) throws -> Future<View> {
         let leaf = try req.make(LeafRenderer.self)
-        return try leaf.make("login")
+        return leaf.render("login")
     }
+    
+   
 
 }
 
@@ -23,6 +25,7 @@ extension LoginController: Controllable {
     
     func register(with router: Router) {
         router.get("/", use: login)
+       
     }
     
 }

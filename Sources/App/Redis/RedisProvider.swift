@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Vapor
+import Service
 
 final class RedisProvider: Provider {
     
@@ -17,16 +17,17 @@ final class RedisProvider: Provider {
 
     public func register(_ services: inout Services) throws {
         services.register(RedisAdaptor.self) { container -> RedisAdaptor in
-            let config = try container.make(RedisConfig.self, for: RedisAdaptor.self)
+//            let config = try container.make(RedisConfig.self, for: RedisAdaptor.self)
             return try RedisAdaptor(
-                config: config,
+                config: RedisConfig.development,
                 on: container
             )
         }
-        
-        services.register { container -> RedisConfig in
-            return RedisConfig.development
-        }
+//        
+//        services.register { container -> RedisConfig in
+//            return RedisConfig.development
+//        }
+    
     }
     
 }

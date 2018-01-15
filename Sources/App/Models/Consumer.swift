@@ -52,18 +52,6 @@ struct Consumer {
     
 }
 
-struct ConsumerView: ViewResource {
-    let name: String
-    let successful: String
-    let failed: String
-    
-    init(_ consumer: Consumer) {
-        self.name = consumer.name
-        self.successful = consumer.formattedSuccessful
-        self.failed = consumer.formattedFailed
-    }
-}
-
 protocol ViewRepresentable {
     var resource: ViewResource { get }
 }

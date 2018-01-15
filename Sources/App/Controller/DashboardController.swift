@@ -32,7 +32,7 @@ final class DashboardController {
                                 return stats?.viewResource
                             }.flatMap(to: View.self) { stats in
                                 let overview = Overview(analytics:  AnalyticsView(analytics), redisStats: stats)
-                                return try req.make(LeafRenderer.self).make("overview", overview)
+                                return try req.make(LeafRenderer.self).render("overview", overview)
                         }
                 }
         }
@@ -51,7 +51,7 @@ final class DashboardController {
             .map(to: [FailedTaskView].self) { tasks in
                 return tasks.map { $0.viewResource }
             }.flatMap(to: View.self) { views in
-                return try req.make(LeafRenderer.self).make("failed", ["tasks": views])
+                return try req.make(LeafRenderer.self).render("failed", ["tasks": views])
         }
     }
     
