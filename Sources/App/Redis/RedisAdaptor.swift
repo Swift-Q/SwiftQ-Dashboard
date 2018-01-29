@@ -12,7 +12,7 @@ import Service
 
 final class RedisAdaptor: Service {
     
-    private let client: Future<RedisClient>
+    let client: Future<RedisClient>
     
     init(config: RedisConfig, on worker: Worker) throws {
         

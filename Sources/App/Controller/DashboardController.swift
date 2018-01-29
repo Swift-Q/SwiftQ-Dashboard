@@ -8,6 +8,7 @@
 import Foundation
 import Vapor
 import Leaf
+import Redis
 
 final class DashboardController {
     
@@ -38,6 +39,16 @@ final class DashboardController {
         }
     }
     
+    
+    private func loadTest(_ req: Request) throws -> Future<String> {
+        return try req.make(RedisAdaptor.self).client.flatMap(to: RedisData.self) { client in
+            _ = client.command("GET", ["hello"])
+            return client.command("GET", ["hello"])
+            }.map(to: String.self) { data in
+                return data.string ?? "Error"
+        }
+    }
+    
     // TODO: Remove session
     private func logout(_ req: Request) throws -> Response {
         return req.redirect(to: "/")
@@ -64,6 +75,7 @@ extension DashboardController: Controllable {
         router.get("/overview", use: overview)
         router.get("/logout", use: logout)
         router.get("/failed", use: failed)
+        router.get("/loadTest", use: loadTest)
     }
     
 }
