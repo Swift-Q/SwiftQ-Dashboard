@@ -157,7 +157,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								#loop(analytics.workers, "worker") {
+                                #for(worker in analytics.workers) {
 								<tr>
 									<th scope="row">#(offset)</th>
 									<td>#(worker.name)</td>

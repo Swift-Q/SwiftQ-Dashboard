@@ -57,7 +57,7 @@ final class DashboardController {
             >>-  curry(get)(client)
             >>-  curry(get)(client)
             >>-  curry(get)(client)
-            <^> RedisResponse.init
+            <^>  RedisResponse.init
     }
    
     func get(with client: RedisClient, for data: RedisData) -> Future<RedisData> {
