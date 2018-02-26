@@ -1,5 +1,6 @@
 import Vapor
 import Leaf
+import Redis
 
 /// Called before your application initializes.
 ///
@@ -12,7 +13,14 @@ public func configure(
     let leaf = LeafProvider()
     try services.register(leaf)
     
-    let redis = RedisProvider()
+    let adaptor = RedisProvider()
+    try services.register(adaptor)
+    
+    let router = EngineRouter.default()
+    try routes(router)
+    services.register(router, as: Router.self)
+    
+    let redis = Redis.RedisProvider()
     try services.register(redis)
 
 }

@@ -22,7 +22,7 @@ struct Consumer {
     
     init(name: String, results: [String?]) {
         self.name = name
-        let integers = results.flatMap { Int($0 ?? "0") }
+        let integers = results.compactMap { Int($0 ?? "0") }
         self.successful = integers[safe: 0] ?? 0
         self.failed = integers[safe: 1] ?? 0
         self.queued = 0

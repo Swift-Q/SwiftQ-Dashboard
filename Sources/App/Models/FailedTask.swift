@@ -48,7 +48,7 @@ final class FailedTask: Codable {
     static func get(_ range: CountableClosedRange<Int>) -> RedisResource<[FailedTask]> {
         let command = Command.lrange(key: "logs", range: range)
         return RedisResource<[FailedTask]>(command: command, transformData: { datas -> [FailedTask] in
-            return datas.flatMap { data in
+            return datas.compactMap { data in
                 return handle {
                     return try JSONDecoder().decode(FailedTask.self, from: data)
                 }

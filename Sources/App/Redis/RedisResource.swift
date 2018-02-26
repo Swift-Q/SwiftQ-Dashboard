@@ -23,7 +23,7 @@ extension RedisResource {
     init(command: Command, transformStrings: @escaping ([String]) -> A?) {
         self.command = command
         self.transform = { data in
-            let strings = data.array?.flatMap { data  in
+            let strings = data.array?.compactMap { data  in
                 data.string
             }
             return strings.flatMap(transformStrings)
@@ -44,7 +44,7 @@ extension RedisResource {
     init(command: Command, transformData: @escaping ([Data]) -> A?) {
         self.command = command
         self.transform = { redisData in
-            let datas = redisData.array?.flatMap { $0.data }
+            let datas = redisData.array?.compactMap { $0.data }
             return datas.flatMap(transformData)
         }
     }

@@ -40,7 +40,7 @@ enum Command {
         case .get(let key): return [RedisData(bulk: key)]
         case .llen(let key): return [RedisData(bulk: key)]
         case .smembers(let key): return [RedisData(bulk: key)]
-        case .mget(let keys): return keys.flatMap { RedisData(bulk: $0) }
+        case .mget(let keys): return keys.compactMap { RedisData(bulk: $0) }
         case .info(let section):
             switch section {
             case .all: return []

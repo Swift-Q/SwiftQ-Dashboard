@@ -17,22 +17,23 @@ final class RedisAdaptor: Service {
     init(config: RedisConfig, on worker: Worker) throws {
         
         let promise = Promise<RedisClient>()
-        let client = try RedisClient.connect(hostname: config.hostname, port: config.port, on: worker)
-        
-        
+        let client = try RedisClient.connect(hostname: config.hostname, port: config.port, on: worker) { _, error in
+            print("[Redis] \(error)")
+        }
+
         guard let password = config.password else {
             
             client.command("SELECT", [RedisData(bulk: config.database.description)]).do { _ in
-                
+
                 promise.complete(client)
-                
+
                 }.catch(promise.fail)
             
             self.client = promise.future
-            
+
             return
         }
-        
+
         client.command("AUTH", [RedisData(bulk: password)]).do { _ in
             client.command("SELECT", [RedisData(bulk: config.database.description)]).do { _ in
                 
@@ -43,7 +44,10 @@ final class RedisAdaptor: Service {
             }.catch(promise.fail)
         
         self.client = promise.future
+        throw ""
     }
+    
+
     
     func execute<A>(_ resource: RedisResource<A>) -> Future<RedisData> {
         return client.flatMap(to: RedisData.self) { client in
@@ -79,6 +83,6 @@ protocol RedisRetrievable {
     static func get() -> RedisResource<Self>
     
 }
-
+    extension String: Error { }
 
 
