@@ -44,7 +44,6 @@ final class RedisAdaptor: Service {
             }.catch(promise.fail)
         
         self.client = promise.future
-        throw ""
     }
     
 
@@ -83,6 +82,5 @@ protocol RedisRetrievable {
     static func get() -> RedisResource<Self>
     
 }
-    extension String: Error { }
 
-
+extension String: Error { }

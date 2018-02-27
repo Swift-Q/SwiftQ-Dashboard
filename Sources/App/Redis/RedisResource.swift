@@ -9,16 +9,11 @@ import Foundation
 import Redis
 
 struct RedisResource<A> {
-    
     let command: Command
-    
     let transform: (RedisData) -> A?
-    
 }
 
-
 extension RedisResource {
-    
     
     init(command: Command, transformStrings: @escaping ([String]) -> A?) {
         self.command = command
@@ -40,7 +35,6 @@ extension RedisResource {
         }
     }
     
-    
     init(command: Command, transformData: @escaping ([Data]) -> A?) {
         self.command = command
         self.transform = { redisData in
@@ -55,5 +49,4 @@ extension RedisResource {
             return data.string.flatMap(transformString)
         }
     }
-    
 }

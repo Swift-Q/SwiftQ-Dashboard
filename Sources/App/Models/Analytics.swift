@@ -11,6 +11,7 @@ struct Analytics {
     
     let consumers: [Consumer]
     
+
     private let formatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
@@ -41,6 +42,14 @@ struct Analytics {
     
     var formattedFailed: String {
         return formatter.string(from: NSNumber(integerLiteral: failed)) ?? ""
+    }
+    
+}
+
+extension Analytics {
+    
+    init(consumers: [Consumer?]) {
+        self.consumers = consumers.compactMap { $0 }
     }
     
 }

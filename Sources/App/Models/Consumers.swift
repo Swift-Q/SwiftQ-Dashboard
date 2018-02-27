@@ -13,7 +13,7 @@ struct Consumers: RedisRetrievable {
     
     static func get() -> RedisResource<Consumers> {
         let command = Command.smembers(key: "consumers")
-        return RedisResource<Consumers>(command: command) { names -> Consumers? in
+        return RedisResource<Consumers>(command: command) { names -> Consumers in
             return Consumers(names: names)
         }
     }

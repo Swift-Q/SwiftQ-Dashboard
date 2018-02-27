@@ -13,59 +13,28 @@ import Redis
 
 final class DashboardController {
     
-    // TODO: Figure out a way to simplify this.
+    
     private func overview(_ req: Request) throws -> Future<View> {
         let client = try req.make(RedisAdaptor.self)
-        return client
+        let consumers = client
             .retrieve(Consumers.self)
-            .flatMap(to: View.self) { consumers in
-                return consumers!  // Throw in retrive function so this is not an optional.
-                    .names
-                    .compactMap { name -> Future<Consumer?> in
-                        return client.retrieve(Consumer.get(with: name))
-                    }
-                    .flatten()
-                    .map(to: Analytics.self) { consumers in
-                        return Analytics(consumers: consumers.compactMap { $0 })
-                    }.flatMap(to: View.self) { analytics in
-                        return client.retrieve(RedisStats.get())
-                            .map(to: RedisStatsView?.self) { stats in
-                                return stats?.viewResource
-                            }.flatMap(to: View.self) { stats in
-                                let overview = Overview(analytics:  AnalyticsView(analytics), redisStats: stats)
-                                return try req.make(LeafRenderer.self).render("overview", overview)
-                        }
-                }
+            .unwrap(or: "Redis Error")
+            .flatMap(to: [Consumer?].self) { consumer in
+                consumer.names.compactMap { name -> Future<Consumer?> in
+                    return client.retrieve(Consumer.get(with: name))
+                    }.flatten()
         }
-    }
-    
-    private func loadTest(_ req: Request) throws -> Future<RedisResponse> {
-        let client = try req.make(RedisClient.self)
         
-        return client.command("LPOP", ["myList"])
-            >>-  curry(get)(client)
-            <^> RedisResponse.init
+        let overview = consumers
+            <^> Analytics.init
+            <^> AnalyticsView.init
+            <^> curry(Overview.init)
+        
+        let stats = client.retrieve(RedisStats.get()).unwrap(or: "Redis error") <^> RedisStatsView.init
+  
+        let renderer: (String, Encodable) -> Future<View> = try req.make(LeafRenderer.self).render
+        return overview <*> stats >>- curry(renderer)("overview")
     }
-    
-    struct RedisResponse: Encodable {
-        init(_ resp: RedisData) { }
-    }
-    
-    private func terse(_ req: Request) throws -> Future<RedisResponse> {
-        let client = try req.make(RedisClient.self)
-        return get(with: client, for: "KEY")
-            >>-  curry(get)(client)
-            >>-  curry(get)(client)
-            >>-  curry(get)(client)
-            <^>  RedisResponse.init
-    }
-   
-    func get(with client: RedisClient, for data: RedisData) -> Future<RedisData> {
-        return client.command("GET", [data])
-    }
-    
-    
-    //  let renderer: (String, Encodable) -> Future<View> = try req.make(LeafRenderer.self).render
     
     // TODO: Remove session
     private func logout(_ req: Request) throws -> Response {
@@ -75,7 +44,6 @@ final class DashboardController {
     private func failed(_ req: Request) throws -> Future<View> {
         let client = try req.make(RedisAdaptor.self)
         let tasks = client.retrieve(FailedTask.get(0...10)) ?? []
-
         return tasks
             .map(to: [FailedTaskView].self) { tasks in
                 return tasks.map { $0.viewResource }
@@ -95,3 +63,18 @@ extension DashboardController: Controllable {
     }
     
 }
+
+
+infix operator <*>: MonadicPrecedenceLeft
+public func <*> <T, U>(f: Future<((T?) -> U)>, a: Future<T>) -> Future<U> {
+    return f.flatMap(to: U.self) { f in
+        return a <^> f
+    }
+}
+
+public func <*> <T, U>(f: Future<((T) -> U)>, a: Future<T>) -> Future<U> {
+    return f.flatMap(to: U.self) { f in
+        return a <^> f
+    }
+}
+

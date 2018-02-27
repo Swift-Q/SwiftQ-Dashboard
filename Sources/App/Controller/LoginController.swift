@@ -13,8 +13,7 @@ final class LoginController {
     
     
      func login(_ req: Request) throws -> Future<View> {
-        let leaf = try req.make(LeafRenderer.self)
-        return leaf.render("login")
+        return try req.make(LeafRenderer.self).render("login")
     }
     
 

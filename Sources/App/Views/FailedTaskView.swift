@@ -23,3 +23,7 @@ struct FailedTaskView: Codable {
         self.errorAt = task.errorAt
     }
 }
+
+struct FailedTaskViews: Codable {
+    let tasks: [FailedTaskView]
+}
